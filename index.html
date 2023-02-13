@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <button id="new-deck">New Deck, Please!</button>
-    <button id="draw-card">Draw a Card</button>
+    <div class="app-container">
+      <button id="new-deck">New Deck, Please!</button>
+      <div id="card-container">
+        <div class="single-card"></div>
+        <div class="single-card"></div>
+      </div>
+      <button id="draw-card">Draw a Card</button>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
