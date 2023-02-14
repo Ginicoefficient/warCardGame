@@ -1,13 +1,23 @@
-let deckId;
+let deckId = "";
+let playerScore = 0;
+let computerScore = 0;
 const cardContainer = document.getElementById("card-container");
 const newDeckBtn = document.getElementById("new-deck");
 const drawCardBtn = document.getElementById("draw-card");
+const cardsRemaining = document.getElementById("cards-remaining");
+const outcomeText = document.getElementById("outcome-text");
+const playerScoreHtml = document.getElementById("player-score");
+const computerScoreHtml = document.getElementById("computer-score");
+
 function handleClick() {
   fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
       deckId = data.deck_id;
+      cardsRemaining.innerHTML = `Cards Remaining: ${data.remaining}`;
+      cardsRemaining.style.visibility = "visible";
+      drawCardBtn.disabled = false;
     });
 }
 
@@ -18,11 +28,27 @@ function drawCard() {
   fetch(fetchString)
     .then((res) => res.json())
     .then((data) => {
-      console.log(data.remaining);
+      cardsRemaining.innerHTML = `Cards Remaining: ${data.remaining}`;
       cardContainer.children[0].innerHTML = `<img src=${data.cards[0].image} class="card" /> `;
-      cardContainer.children[1].innerHTML = `<img src=${data.cards[1].image} class="card" />`;
+      cardContainer.children[1].innerHTML = `<img src=${data.cards[1].image} class="card" /> `;
 
-      whoWins(data.cards[0].value, data.cards[1].value);
+      outcomeText.innerHTML = whoWins(data.cards[0], data.cards[1]);
+
+      playerScoreHtml.innerHTML = `Player Score: ${playerScore}`;
+      computerScoreHtml.innerHTML = `Computer Score: ${computerScore}`;
+
+      if (data.remaining === 0) {
+        cardsRemaining.innerHTML = `Cards Remaining: ${data.remaining}`;
+        drawCardBtn.disabled = true;
+        if (playerScore > computerScore) {
+          outcomeText.innerHTML = "The player wins the whole game!";
+        }
+        if (playerScore < computerScore) {
+          outcomeText.innerHTML = "Darn! The Computer wins this time!";
+        } else {
+          outcomeText.innerHTML = "It was a clean tie!";
+        }
+      }
     });
 }
 
@@ -50,12 +76,14 @@ function whoWins(card1Value, card2Value) {
     ACE: 14,
   };
 
-  if (cardValue[card1Value] > cardValue[card2Value]) {
-    console.log("card one wins");
-  } else if (cardValue[card1Value] < cardValue[card2Value]) {
-    console.log("card two wins");
-  } else if (cardValue[card1Value] == cardValue[card2Value]) {
-    console.log("draw!");
+  if (cardValue[card1Value.value] > cardValue[card2Value.value]) {
+    computerScore += 1;
+    return "Computer wins!";
+  } else if (cardValue[card1Value.value] < cardValue[card2Value.value]) {
+    playerScore += 1;
+    return "Player wins!";
+  } else if (cardValue[card1Value.value] == cardValue[card2Value.value]) {
+    return "War!!";
   }
 }
 
