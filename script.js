@@ -42,8 +42,7 @@ function drawCard() {
         drawCardBtn.disabled = true;
         if (playerScore > computerScore) {
           outcomeText.innerHTML = "The player wins the whole game!";
-        }
-        if (playerScore < computerScore) {
+        } else if (playerScore < computerScore) {
           outcomeText.innerHTML = "Darn! The Computer wins this time!";
         } else {
           outcomeText.innerHTML = "It was a clean tie!";

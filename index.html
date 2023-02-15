@@ -10,17 +10,19 @@
   </head>
   <body>
     <div class="app-container">
-      <div>
+      <div class="header" id="header">
         <button id="new-deck">New Deck, Please!</button>
-        <h2>Cards Remaining:</h2>
+        <h2 id="cards-remaining">Cards Remaining:</h2>
       </div>
 
       <h2 id="outcome-text">Game of War</h2>
+      <h2 id="computer-score"></h2>
       <div id="card-container">
         <div class="single-card"></div>
         <div class="single-card"></div>
       </div>
-      <button id="draw-card">Draw a Card</button>
+      <h2 id="player-score"></h2>
+      <button disabled id="draw-card">Draw a Card</button>
     </div>
 
     <script src="script.js"></script>
